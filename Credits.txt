@@ -1,0 +1,71 @@
+ASET PIHAK KETIGA — Last Commit
+Kelompok 12 · Grafika Komputer
+Rizki Ramadhan (2404130078) · Najwa Putri Aulia (2404130152)
+
+Terakhir diperbarui: 17 November 2026
+
+================================================================
+1. Furniture Kit
+   Pembuat  : Kenney
+   Sumber   : https://kenney.nl/assets/furniture-kit
+   Lisensi  : CC0 1.0 Universal (Public Domain Dedication)
+   Dipakai  : meja, kursi, rak buku, counter, dan perabot kedai
+   Diunduh  : 16 November 2026
+   Catatan  : CC0 membebaskan penggunaan tanpa syarat, termasuk
+              komersial. Atribusi tidak diwajibkan, tetap dicatat
+              di sini sebagai praktik yang baik.
+
+================================================================
+2. Space Grotesk
+   Pembuat  : Florian Karsten
+   Sumber   : https://fonts.google.com/specimen/Space+Grotesk
+   Lisensi  : SIL Open Font License 1.1
+   Dipakai  : font judul pada seluruh layar UI (teks ukuran 44 ke
+              atas): judul menu, angka uang, dan jam pada HUD
+   Diunduh  : 17 November 2026
+   Catatan  : OFL mengizinkan pemakaian dan distribusi di dalam
+              game, termasuk komersial, selama fontnya sendiri
+              tidak dijual terpisah.
+
+================================================================
+3. IBM Plex Sans
+   Pembuat  : IBM (desain: Mike Abbink bersama Bold Monday)
+   Sumber   : https://fonts.google.com/specimen/IBM+Plex+Sans
+   Lisensi  : SIL Open Font License 1.1
+   Dipakai  : font isi pada seluruh layar UI (teks di bawah
+              ukuran 44): dialog pelanggan, statistik rekap
+              malam, deskripsi upgrade
+   Diunduh  : 17 November 2026
+
+================================================================
+4. [Musik latar — diisi Rizki]
+   Pembuat  :
+   Sumber   :
+   Lisensi  :
+   Dipakai  : musik latar saat shift, dasar beat untuk rhythm
+   Diunduh  :
+
+================================================================
+5. [Efek suara — diisi Rizki]
+   Pembuat  :
+   Sumber   :
+   Lisensi  :
+   Dipakai  : hujan, guntur, umpan balik Perfect/Good/Miss
+   Diunduh  :
+
+================================================================
+CATATAN
+
+- Tambahkan satu blok baru setiap kali mengambil aset dari luar,
+  sekecil apa pun, termasuk font dan satu file suara.
+- Sebelum memakai aset, pastikan lisensinya mengizinkan dipakai
+  di dalam game. Hindari aset berlisensi "personal use only"
+  atau yang tidak mencantumkan lisensi sama sekali.
+- Semua aset 3D diusahakan berasal dari satu pack utama supaya
+  gaya visualnya seragam, sesuai rencana teknis di GDD.
+
+- Starter Assets dari Unity Asset Store TIDAK jadi dipakai, jadi
+  blok lamanya dihapus dari daftar ini. Controller sementara di
+  Assets/_Sementara/PemeriksaRuangan.cs adalah kode tulisan
+  sendiri, bukan aset pihak ketiga, dan akan dihapus begitu
+  PlayerController pada Tugas A selesai.

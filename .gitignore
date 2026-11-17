@@ -73,3 +73,24 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# ---------------------------------------------------------------
+# Tambahan untuk project ini (Kelompok 12 - Last Commit)
+# ---------------------------------------------------------------
+
+# Preferensi editor per-orang, bukan bagian dari project
+/[Uu]ser[Ss]ettings/
+/[Rr]ecordings/
+/[Mm]emoryCaptures/
+
+# Hasil ekstrak unduhan, sumbernya sudah disalin ke Assets/
+/kenney_furniture-kit/
+/Space_Grotesk/
+/IBM_Plex_Sans/
+
+# Salinan script yang tertinggal di akar project.
+# Yang dipakai Unity ada di Assets/Editor/ dan Assets/_Sementara/.
+/*.cs
+
+# Jangan commit build jadi
+*.exe
