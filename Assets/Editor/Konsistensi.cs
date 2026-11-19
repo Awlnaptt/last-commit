@@ -1,15 +1,3 @@
-// Konsistensi.cs — Tugas 7: samakan font dan warna
-//
-// Taruh di: Assets/Editor/Konsistensi.cs
-// Buka lewat menu: Last Commit > Konsistensi Font dan Warna
-//
-// Tiga tombol, dipakai berurutan:
-//   1. Bikin TMP Font Asset  — ubah file .ttf jadi font yang bisa dipakai TMP
-//   2. Terapkan font ke UI   — pasang ke semua teks di prefab dan di scene
-//   3. Samakan warna ruangan — ganti warna lantai/dinding ke palet GDD
-//
-// Tombol 3 hanya menyentuh Lantai, Langit, dan Dinding_*. Model Kenney tidak
-// diutak-atik, jadi aman dijalankan kapan saja.
 
 using System.Collections.Generic;
 using UnityEngine;
