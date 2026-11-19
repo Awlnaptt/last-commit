@@ -1,13 +1,4 @@
-// PasangModel.cs — versi 3
-//
-// Perbaikan dari versi 2:
-//  1. Mode ukuran bisa dipilih. Default "Isi penuh kotak", artinya model
-//     diregangkan mengisi kotak blockout, jadi counter tetap 3,2 meter.
-//  2. Mesin kopi otomatis didudukkan di atas counter, dan laptop di atas
-//     meja sudut, berapa pun ukuran model yang dipakai.
-//
-// Taruh di: Assets/Editor/PasangModel.cs  (timpa yang lama)
-// Buka lewat menu: Last Commit > Pasang Model ke Blockout
+
 
 using UnityEngine;
 using UnityEditor;
