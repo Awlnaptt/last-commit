@@ -1,13 +1,4 @@
-// IsiTahap2.cs — Tugas 8: isi grup Tahap2 dengan benda tambahan
-//
-// Taruh di: Assets/Editor/IsiTahap2.cs
-// Jalankan lewat menu: Last Commit > Isi Tahap 2
-//
-// Semua yang dibuat di sini masih berupa kotak. Nanti bisa kamu ganti model
-// Kenney dengan cara drag model ke scene, atau biarkan saja kalau waktu mepet.
-// Yang penting ruangan tidak terasa kosong.
-//
-// Aman dijalankan berulang kali: isi lama dihapus dulu.
+
 
 using UnityEngine;
 using UnityEditor;
