@@ -1,13 +1,4 @@
-// RapikanTataLetak.cs
-// Memperbaiki dua hal tanpa membongkar model yang sudah terpasang:
-//   1. Jendela dilebarkan dan ditinggikan
-//   2. Rak buku digeser ke kanan supaya tidak menutupi jendela
-//
-// Taruh di: Assets/Editor/RapikanTataLetak.cs
-// Jalankan lewat menu: Last Commit > Rapikan Tata Letak
-//
-// CATATAN: kalau suatu saat kamu menekan "Bangun ulang kotak blockout",
-// jalankan alat ini lagi sesudahnya, karena bangun ulang memakai ukuran lama.
+
 
 using UnityEngine;
 using UnityEditor;
@@ -15,7 +6,7 @@ using UnityEditor.SceneManagement;
 
 public static class RapikanTataLetak
 {
-    // Jendela baru: membentang dari x -4.0 sampai x +1.2, tinggi 0.8 sampai 2.5
+
     const float JENDELA_KIRI  = -4.0f;
     const float JENDELA_KANAN =  1.2f;
     const float JENDELA_BAWAH =  0.8f;
@@ -26,7 +17,7 @@ public static class RapikanTataLetak
     const float TINGGI      =  3f;
     const float Z_DINDING   =  4.05f;
 
-    // Posisi baru rak buku, digeser ke kanan supaya lepas dari jendela
+
     const float RAK_X = 3.1f;
 
     [MenuItem("Last Commit/Rapikan Tata Letak")]
