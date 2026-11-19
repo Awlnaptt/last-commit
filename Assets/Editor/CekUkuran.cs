@@ -1,8 +1,3 @@
-// CekUkuran.cs — mengukur model yang sudah terpasang dan menghitung Scale Factor
-// Taruh di: Assets/Editor/CekUkuran.cs
-// Buka lewat menu: Last Commit > Cek Ukuran Model
-//
-// Alat ini TIDAK mengubah apa pun sampai kamu klik tombolnya.
 
 using System.Collections.Generic;
 using UnityEngine;
