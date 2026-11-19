@@ -1,10 +1,3 @@
-// BuatKedai.cs — Blockout kedai "Last Commit"  (versi 2, error CS1503 sudah diperbaiki)
-// Taruh file ini di: Assets/Editor/BuatKedai.cs
-// Lalu di Unity, menu atas: Last Commit > Bangun Blockout Kedai
-//
-// Script ini HANYA jalan di Editor, tidak ikut ke build.
-// Isinya kotak-kotak untuk menata ruangan. Nanti tinggal diganti
-// model asli dari asset pack, posisinya sudah benar.
 
 using UnityEngine;
 using UnityEditor;
