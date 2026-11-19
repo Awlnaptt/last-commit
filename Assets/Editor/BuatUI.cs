@@ -1,12 +1,3 @@
-// BuatUI.cs — Tugas 6: bikin semua layar UI sekaligus
-//
-// Taruh di: Assets/Editor/BuatUI.cs
-// Jalankan lewat menu: Last Commit > Buat Layar UI
-//
-// Hasilnya: 1 Canvas di scene + 8 prefab di Assets/Prefabs/UI/
-// Yang aktif cuma HUD, sisanya dimatikan supaya Game view tidak penuh.
-// Semua teks dan angka di sini cuma contoh tampilan. Rizki yang menyambungkan
-// ke logika lewat script-nya, kamu cukup serahkan prefab-nya.
 
 using UnityEngine;
 using UnityEngine.UI;
