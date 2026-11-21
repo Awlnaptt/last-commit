@@ -35,30 +35,33 @@ public static class IsiTahap2
         int jumlah = 0;
 
         // --- Tanaman di dua sudut yang masih kosong ---
-        jumlah += Tanaman(tahap2, "Tanaman_Pot1", new Vector3(-4.5f, 0f, 3.5f), 1.1f);
-        jumlah += Tanaman(tahap2, "Tanaman_Pot2", new Vector3( 1.7f, 0f, -3.4f), 0.9f);
+        // Tanaman pot lantai, bukan pot meja
+        jumlah += Tanaman(tahap2, "Tanaman_Pot1", new Vector3(-4.5f, 0f,  3.5f), 1.35f);
+        jumlah += Tanaman(tahap2, "Tanaman_Pot2", new Vector3( 1.7f, 0f, -3.4f), 1.35f);
 
         int dibuang = BersihkanLampuLiar(akar, pencahayaan);
 
         // --- Tahap 1: dua lampu saja, counter dan seberangnya ---
         // Jangkauannya dilebihkan supaya ruangan tetap terbaca tanpa Tahap2.
-        jumlah += LampuGantung(pencahayaan, "LampuGantung_Counter",  new Vector3( 3.4f, 0f,  0.5f), 9f);
+        jumlah += LampuGantung(pencahayaan, "LampuGantung_Counter",  DiAtasnya(akar, "Counter", new Vector3(3.4f, 0f, 0.5f)), 9f);
         jumlah += LampuGantung(pencahayaan, "LampuGantung_Seberang", new Vector3(-3.5f, 0f, -0.4f), 9f);
 
         // --- Tahap 2: lampu tambahan di atas meja-meja ---
-        jumlah += LampuGantung(tahap2, "LampuGantung_Meja1",     new Vector3(-3.5f, 0f,  2.6f));
-        jumlah += LampuGantung(tahap2, "LampuGantung_Meja2",     new Vector3(-1.0f, 0f,  2.6f));
-        jumlah += LampuGantung(tahap2, "LampuGantung_MejaSudut", new Vector3( 3.9f, 0f, -3.2f));
+        // Posisinya diambil dari perabot yang ADA DI SCENE, bukan angka tetap.
+        // Geser mejamu kapan saja, jalankan ulang, lampunya ikut pindah.
+        jumlah += LampuGantung(tahap2, "LampuGantung_Meja1",     DiAtasnya(akar, "Meja1",     new Vector3(-4.3f, 0f,  1.7f)));
+        jumlah += LampuGantung(tahap2, "LampuGantung_Meja2",     DiAtasnya(akar, "Meja2",     new Vector3(-1.7f, 0f,  1.8f)));
+        jumlah += LampuGantung(tahap2, "LampuGantung_MejaSudut", DiAtasnya(akar, "MejaSudut", new Vector3( 3.9f, 0f, -3.5f)));
 
         // --- Poster di dinding timur dan selatan ---
-        jumlah += Kotak(tahap2, "Poster_Timur",   new Vector3( 4.92f, 1.8f, -1.0f), new Vector3(0.04f, 0.9f, 0.65f), KERTAS);
+        jumlah += Kotak(tahap2, "Poster_Timur",   new Vector3( 4.92f, 2.07f, -2.8f), new Vector3(0.04f, 0.9f, 0.65f), KERTAS);
         jumlah += Kotak(tahap2, "Poster_Selatan", new Vector3( 0.8f,  1.8f, -3.94f), new Vector3(0.75f, 0.95f, 0.04f), KERTAS);
 
         // --- Keset di depan pintu ---
         jumlah += Kotak(tahap2, "Keset", new Vector3(-3.5f, 0.015f, -3.5f), new Vector3(1.3f, 0.03f, 0.85f), KAIN);
 
         // --- Dua kursi bar menghadap counter ---
-        jumlah += KursiBar(tahap2, "KursiBar1", new Vector3(2.4f, 0f,  1.5f));
+        jumlah += KursiBar(tahap2, "KursiBar1", new Vector3(2.4f, 0f,  0.3f));
         jumlah += KursiBar(tahap2, "KursiBar2", new Vector3(2.4f, 0f, -0.4f));
 
         // --- Benda kecil di atas perabot yang sudah ada ---
@@ -66,7 +69,8 @@ public static class IsiTahap2
         jumlah += DiAtas(akar, tahap2, "Gelas_Meja2", "Meja2", new Vector3(0.09f, 0.13f, 0.09f), KACA);
         jumlah += DiAtas(akar, tahap2, "Gelas_Meja3", "Meja3", new Vector3(0.09f, 0.13f, 0.09f), KACA);
         jumlah += DiAtas(akar, tahap2, "TumpukanBuku", "RakBuku", new Vector3(0.45f, 0.22f, 0.28f), KAYU);
-        jumlah += DiAtas(akar, tahap2, "ToplesBiji", "Counter", new Vector3(0.22f, 0.3f, 0.22f), KAYU);
+        // Digeser ke ujung counter supaya tidak menindih mesin kopi
+        jumlah += DiAtas(akar, tahap2, "ToplesBiji", "Counter", new Vector3(0.22f, 0.3f, 0.22f), KAYU, -0.3f);
 
         // Cahaya dasar sedikit dinaikkan supaya sudut gelap tetap terbaca
         RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Flat;
@@ -86,6 +90,19 @@ public static class IsiTahap2
             "Kalau ruangan jadi terlalu terang atau ada lampu yang mati sendiri, buka " +
             "URP Asset > Lighting > Additional Lights dan naikkan Per Object Limit.\n\n" +
             "Jangan lupa Ctrl+S.", "OK");
+    }
+
+    // Ambil titik tengah perabot yang ada di scene, jatuhkan ke lantai.
+    // Kalau perabotnya tidak ketemu, pakai angka cadangan.
+    static Vector3 DiAtasnya(GameObject akar, string namaPerabot, Vector3 cadangan)
+    {
+        var t = Cari(akar, namaPerabot);
+        if (t == null) return cadangan;
+
+        Bounds b;
+        if (!HitungBounds(t.gameObject, out b)) return new Vector3(t.position.x, 0f, t.position.z);
+
+        return new Vector3(b.center.x, 0f, b.center.z);
     }
 
     // ---------- Pembuat benda ----------
@@ -146,7 +163,7 @@ public static class IsiTahap2
 
     // Taruh benda kecil persis di permukaan atas objek yang sudah ada
     static int DiAtas(GameObject akarKedai, Transform induk, string nama,
-                      string namaAlas, Vector3 ukuran, Color warna)
+                      string namaAlas, Vector3 ukuran, Color warna, float bagian = 0f)
     {
         var alas = Cari(akarKedai, namaAlas);
         if (alas == null)
@@ -162,7 +179,9 @@ public static class IsiTahap2
             return 0;
         }
 
-        var posisi = new Vector3(b.center.x, b.max.y + ukuran.y * 0.5f, b.center.z);
+        var kotakBenda = new Bounds(Vector3.zero, ukuran);
+        var posisi = new Vector3(b.center.x, b.max.y + ukuran.y * 0.5f, b.center.z)
+                   + Geseran(b, kotakBenda, bagian);
         Kotak(induk, nama, posisi, ukuran, warna);
         return 1;
     }
@@ -202,6 +221,25 @@ public static class IsiTahap2
             n++;
         }
         return n;
+    }
+
+
+    // Geser benda di sepanjang sisi terpanjang penopangnya, supaya dua benda
+    // di permukaan yang sama tidak saling menindih. bagian: -0.5 sampai 0.5
+    // dari panjang yang tersisa setelah dikurangi ukuran bendanya sendiri.
+    static Vector3 Geseran(Bounds penopang, Bounds benda, float bagian)
+    {
+        if (Mathf.Abs(bagian) < 0.0001f) return Vector3.zero;
+
+        bool panjangKeZ = penopang.size.z >= penopang.size.x;
+        float ruang = panjangKeZ
+            ? penopang.size.z - benda.size.z
+            : penopang.size.x - benda.size.x;
+
+        if (ruang <= 0f) return Vector3.zero;   // tidak muat, biarkan di tengah
+
+        float d = Mathf.Clamp(bagian, -0.5f, 0.5f) * ruang;
+        return panjangKeZ ? new Vector3(0f, 0f, d) : new Vector3(d, 0f, 0f);
     }
 
     // ---------- Pembantu ----------

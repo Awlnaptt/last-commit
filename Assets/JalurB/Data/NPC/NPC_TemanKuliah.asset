@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 500722cf50a79664181747d6c3c58235, type: 3}
+  m_Name: NPC_TemanKuliah
+  m_EditorClassIdentifier: 
+  namaTampil: Dimas
+  peran: Teman kuliah
+  karakter: {fileID: 11400000, guid: bcf5b18018b833a4f825e1912414fbe5, type: 2}
+  hariMuncul: 3
+  dialog: {fileID: 11400000, guid: 46a12a60a9189b547b4705abcb83be12, type: 2}
+  sapaan:
+  - Bro... boleh ngobrol bentar?

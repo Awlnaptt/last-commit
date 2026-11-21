@@ -28,7 +28,6 @@ public static class BuatKedai
         var mGelap   = Mat("M_Gelap",   new Color(0.17f, 0.16f, 0.15f));
         var mKaca    = Mat("M_Kaca",    new Color(0.24f, 0.41f, 0.57f));
         var mAksen   = Mat("M_Aksen",   new Color(0.91f, 0.64f, 0.24f));
-        var mDaun    = Mat("M_Daun",    new Color(0.35f, 0.52f, 0.30f));
 
         // ---------- Struktur ruangan ----------
         var str = Induk("Struktur", t);
@@ -40,10 +39,12 @@ public static class BuatKedai
         Kotak("Dinding_Timur", str, new Vector3( 5.05f, 1.5f, 0f), new Vector3(0.1f, TINGGI, PANJANG), mDinding);
 
         // Dinding utara (z = +4), ada lubang jendela x -2..+2, y 1..2.4
-        Kotak("Dinding_Utara_Kiri",  str, new Vector3(-3.5f, 1.5f, 4.05f), new Vector3(3f, TINGGI, 0.1f), mDinding);
-        Kotak("Dinding_Utara_Kanan", str, new Vector3( 3.5f, 1.5f, 4.05f), new Vector3(3f, TINGGI, 0.1f), mDinding);
-        Kotak("Dinding_Utara_Bawah", str, new Vector3( 0f, 0.5f, 4.05f),   new Vector3(4f, 1f, 0.1f), mDinding);
-        Kotak("Dinding_Utara_Atas",  str, new Vector3( 0f, 2.7f, 4.05f),   new Vector3(4f, 0.6f, 0.1f), mDinding);
+        // Jendela 6 x 1,7 m: x -4.2 sampai 1.8, y 0.85 sampai 2.55.
+        // Batas kanan dijaga di 1.8 supaya rak buku di dinding utara tidak menutupinya.
+        Kotak("Dinding_Utara_Kiri",  str, new Vector3(-4.6f,  1.5f,   4.05f), new Vector3(0.8f, TINGGI, 0.1f), mDinding);
+        Kotak("Dinding_Utara_Kanan", str, new Vector3( 3.4f,  1.5f,   4.05f), new Vector3(3.2f, TINGGI, 0.1f), mDinding);
+        Kotak("Dinding_Utara_Bawah", str, new Vector3(-1.2f,  0.425f, 4.05f), new Vector3(6f,   0.85f,  0.1f), mDinding);
+        Kotak("Dinding_Utara_Atas",  str, new Vector3(-1.2f,  2.775f, 4.05f), new Vector3(6f,   0.45f,  0.1f), mDinding);
 
         // Dinding selatan (z = -4), ada lubang pintu x -4.2..-2.8, y 0..2.1
         Kotak("Dinding_Selatan_Kiri",      str, new Vector3(-4.6f, 1.5f, -4.05f),  new Vector3(0.8f, TINGGI, 0.1f), mDinding);
@@ -54,7 +55,7 @@ public static class BuatKedai
         // JANGAN ganti nama objek di bawah ini tanpa bilang ke Rizki.
         var interaktif = Induk("ObjekInteraktif", t);
 
-        Kotak("JendelaHujan", interaktif, new Vector3(0f, 1.7f, 4f), new Vector3(4f, 1.4f, 0.06f), mKaca);
+        Kotak("JendelaHujan", interaktif, new Vector3(-1.2f, 1.7f, 4f), new Vector3(6f, 1.7f, 0.06f), mKaca);
         Kotak("Pintu", interaktif, new Vector3(-3.5f, 1.05f, -4f), new Vector3(1.3f, 2.1f, 0.08f), mKayu);
 
         // Counter memanjang ke arah Z di sisi timur, tinggi 1 m
@@ -65,7 +66,7 @@ public static class BuatKedai
         Kotak("Speaker", interaktif, new Vector3(-4.6f, 0.5f, -2.6f), new Vector3(0.5f, 1f, 0.5f), mGelap);
 
         // Laptop di sudut tenggara, di atas meja kecil
-        Kotak("MejaSudut", t, new Vector3(3.9f, 0.4f, -3.2f), new Vector3(1f, 0.8f, 0.9f), mKayu);
+        Kotak("MejaSudut", t, new Vector3(3.9f, 0.4f, -3.5f), new Vector3(1f, 0.8f, 0.9f), mKayu);
         var laptop = Induk("Laptop", interaktif);
         laptop.transform.localPosition = new Vector3(3.9f, 0.82f, -3.2f);
         Kotak("Badan", laptop, new Vector3(0f, 0f, 0f), new Vector3(0.42f, 0.04f, 0.3f), mGelap);
@@ -75,18 +76,20 @@ public static class BuatKedai
         // ---------- Perabot ----------
         var perabot = Induk("Perabot", t);
 
-        Meja("Meja1", perabot, new Vector3(-3.5f, 0f, 2.6f), mKayu);
-        Meja("Meja2", perabot, new Vector3(-1f, 0f, 2.6f), mKayu);
-        Meja("Meja3", perabot, new Vector3(-3.5f, 0f, -0.4f), mKayu);
+        // Koordinat di bawah mengikuti tata letak yang dipakai sekarang,
+        // bukan rancangan awal. Diperbarui 19 November 2026.
+        Meja("Meja1", perabot, new Vector3(-4.3f, 0f,  1.7f), mKayu);
+        Meja("Meja2", perabot, new Vector3(-1.7f, 0f,  1.8f), mKayu);
+        Meja("Meja3", perabot, new Vector3(-4.3f, 0f, -1.2f), mKayu);
 
-        Kursi("Kursi1a", perabot, new Vector3(-4.3f, 0f, 2.6f), 90f, mKayu);
-        Kursi("Kursi1b", perabot, new Vector3(-2.7f, 0f, 2.6f), -90f, mKayu);
-        Kursi("Kursi2a", perabot, new Vector3(-1.8f, 0f, 2.6f), 90f, mKayu);
-        Kursi("Kursi2b", perabot, new Vector3(-0.2f, 0f, 2.6f), -90f, mKayu);
-        Kursi("Kursi3a", perabot, new Vector3(-4.3f, 0f, -0.4f), 90f, mKayu);
-        Kursi("Kursi3b", perabot, new Vector3(-2.7f, 0f, -0.4f), -90f, mKayu);
+        Kursi("Kursi1a", perabot, new Vector3(-4.4f, 0f,  2.3f), -90f, mKayu);
+        Kursi("Kursi1b", perabot, new Vector3(-2.8f, 0f,  2.7f),  90f, mKayu);
+        Kursi("Kursi2a", perabot, new Vector3(-1.8f, 0f,  2.3f), -90f, mKayu);
+        Kursi("Kursi2b", perabot, new Vector3(-0.2f, 0f,  2.8f),  90f, mKayu);
+        Kursi("Kursi3a", perabot, new Vector3(-4.4f, 0f, -0.6f), -90f, mKayu);
+        Kursi("Kursi3b", perabot, new Vector3(-2.8f, 0f, -0.2f),  90f, mKayu);
 
-        Kotak("RakBuku", perabot, new Vector3(1.4f, 1f, 3.7f), new Vector3(2f, 2f, 0.4f), mKayu);
+        Kotak("RakBuku", perabot, new Vector3(3.15f, 1f, 3.7f), new Vector3(2f, 2f, 0.4f), mKayu);
 
         // ---------- Pencahayaan ----------
         var cahaya = Induk("Cahaya", t);
@@ -102,26 +105,10 @@ public static class BuatKedai
         titik.transform.localPosition = new Vector3(-3.5f, 0f, -3f);
         titik.transform.localRotation = Quaternion.identity; // menghadap ke dalam kedai
 
-        // ---------- Tahap 2, dimatikan dulu ----------
-        var tahap2 = Induk("Tahap2", t);
-
-        Kotak("Tanaman_Pot", tahap2, new Vector3(-4.4f, 0.25f, 3.2f), new Vector3(0.45f, 0.5f, 0.45f), mKayu);
-        Bola("Tanaman_Daun", tahap2, new Vector3(-4.4f, 0.8f, 3.2f), new Vector3(0.8f, 0.8f, 0.8f), mDaun);
-
-        Kotak("LampuGantung_Badan", tahap2, new Vector3(0f, 2.55f, 0f), new Vector3(0.5f, 0.3f, 0.5f), mAksen);
-        var lampuG = Induk("LampuGantung_Cahaya", tahap2);
-        lampuG.transform.localPosition = new Vector3(0f, 2.3f, 0f);
-        var lg = lampuG.AddComponent<Light>();
-        lg.type = LightType.Point;
-        lg.color = new Color(1f, 0.76f, 0.46f);
-        lg.intensity = 2f;
-        lg.range = 7f;
-
-        Kotak("Poster", tahap2, new Vector3(-4.9f, 2f, 1f), new Vector3(0.06f, 0.9f, 1.3f), mAksen);
-        Kursi("KursiTambahan1", tahap2, new Vector3(0.6f, 0f, 2.6f), -90f, mKayu);
-        Kursi("KursiTambahan2", tahap2, new Vector3(1.4f, 0f, 1.2f), 180f, mKayu);
-
-        tahap2.SetActive(false); // Tugas A yang menyalakannya lewat script saat upgrade dibeli
+        // ---------- Tahap 2 ----------
+        // Tidak dibuat di sini lagi. Hiasan Tahap 2 dan lampu gantung
+        // sekarang milik IsiTahap2.cs, supaya koordinatnya tidak bercabang
+        // di dua script. Jalankan Last Commit > Isi Tahap 2 sesudah ini.
 
         // ---------- Tandai statis supaya lighting bisa di-bake ----------
         TandaiStatis(str);

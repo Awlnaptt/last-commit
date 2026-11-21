@@ -211,7 +211,10 @@ public class PasangModelWindow : EditorWindow
         n += Pasang(akar, "Laptop", mLaptop);
 
         // Benda yang harus menumpang di atas benda lain, dirapikan terakhir
-        DudukkanDiAtas(akar, "MesinKopi", "Counter");
+        // Mesin kopi dan toples berbagi counter: masing-masing digeser ke
+        // ujung yang berbeda supaya tidak bertindihan.
+        DudukkanDiAtas(akar, "MesinKopi", "Counter", 0.3f);
+        DudukkanDiAtas(akar, "ToplesBiji", "Counter", -0.3f);
         DudukkanDiAtas(akar, "Laptop", "MejaSudut");
         DudukkanDiAtas(akar, "Gelas_Meja1", "Meja1");
         DudukkanDiAtas(akar, "Gelas_Meja2", "Meja2");
@@ -314,7 +317,7 @@ public class PasangModelWindow : EditorWindow
     }
 
     // Letakkan satu objek tepat di atas permukaan objek lain
-    static void DudukkanDiAtas(GameObject akar, string namaAtas, string namaBawah)
+    static void DudukkanDiAtas(GameObject akar, string namaAtas, string namaBawah, float bagian = 0f)
     {
         Transform atas = CariAnak(akar.transform, namaAtas);
         Transform bawah = CariAnak(akar.transform, namaBawah);
@@ -328,10 +331,29 @@ public class PasangModelWindow : EditorWindow
         atas.position += new Vector3(
             bBawah.center.x - bAtas.center.x,
             bBawah.max.y - bAtas.min.y,
-            bBawah.center.z - bAtas.center.z);
+            bBawah.center.z - bAtas.center.z) + Geseran(bBawah, bAtas, bagian);
 
         PasangCollider(atas.gameObject, atas.localScale);
     }
+
+    // Geser benda di sepanjang sisi terpanjang penopangnya, supaya dua benda
+    // di permukaan yang sama tidak saling menindih. bagian: -0.5 sampai 0.5
+    // dari panjang yang tersisa setelah dikurangi ukuran bendanya sendiri.
+    static Vector3 Geseran(Bounds penopang, Bounds benda, float bagian)
+    {
+        if (Mathf.Abs(bagian) < 0.0001f) return Vector3.zero;
+
+        bool panjangKeZ = penopang.size.z >= penopang.size.x;
+        float ruang = panjangKeZ
+            ? penopang.size.z - benda.size.z
+            : penopang.size.x - benda.size.x;
+
+        if (ruang <= 0f) return Vector3.zero;   // tidak muat, biarkan di tengah
+
+        float d = Mathf.Clamp(bagian, -0.5f, 0.5f) * ruang;
+        return panjangKeZ ? new Vector3(0f, 0f, d) : new Vector3(d, 0f, 0f);
+    }
+
 
     static bool HitungBounds(GameObject go, out Bounds hasil)
     {

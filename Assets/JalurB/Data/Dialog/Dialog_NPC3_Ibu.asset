@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fbd82a11b30e834aa3330ca69c85662, type: 3}
+  m_Name: Dialog_NPC3_Ibu
+  m_EditorClassIdentifier: 
+  baris:
+  - pembicara: Ibu
+    potret: {fileID: 0}
+    isi: Ibu mampir. Kedainya hangat, ya.
+  - pembicara: Ibu
+    potret: {fileID: 0}
+    isi: Kamu sudah memutuskan?
+  pilihan:
+  - teks: Aku mau bertahan di kedai, Bu.
+    ubahKetenangan: 0
+    balasan: Kalau itu yang bikin kamu tenang, Ibu dukung.
+  - teks: Mungkin aku ambil tawarannya, Bu.
+    ubahKetenangan: 0
+    balasan: Apa pun pilihanmu, kamu tetap anak Ibu.
+  ketenanganSaatSelesai: 10

@@ -1,7 +1,13 @@
+// CekUkuran.cs — mengukur model yang sudah terpasang dan menghitung Scale Factor
+// Taruh di: Assets/Editor/CekUkuran.cs
+// Buka lewat menu: Last Commit > Cek Ukuran Model
+//
+// Alat ini TIDAK mengubah apa pun sampai kamu klik tombolnya.
 
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 
 public class CekUkuranWindow : EditorWindow
 {
@@ -44,6 +50,11 @@ public class CekUkuranWindow : EditorWindow
         for (int i = 0; i < NAMA.Length; i++)
             if (NAMA[i] == nama) return TARGET[i];
 
+        // Pelanggan berdiri di objek bernama Titik*.
+        // 1,25 m, bukan 1,70 m: karakter chibi proporsinya 3-4 kali tinggi kepala,
+        // bukan 7-8 seperti manusia. Dipaksa setinggi manusia, kepalanya jadi raksasa.
+        if (nama.StartsWith("Titik"))        return 1.25f;
+
         if (nama.StartsWith("Gelas"))        return 0.12f;
         if (nama.StartsWith("Kursi"))        return 0.90f;
         if (nama.StartsWith("Meja"))         return 0.75f;
@@ -53,6 +64,7 @@ public class CekUkuranWindow : EditorWindow
         if (nama.StartsWith("Toples"))       return 0.30f;
         if (nama.StartsWith("Tumpukan"))     return 0.22f;
         if (nama.StartsWith("Keset"))        return 0.04f;
+        if (nama.StartsWith("Titik"))        return 1.75f;   // titik pelanggan: tinggi orang dewasa
 
         return 1.00f;   // tidak dikenali, anggap setinggi 1 meter
     }
@@ -124,6 +136,20 @@ public class CekUkuranWindow : EditorWindow
 
         EditorGUILayout.EndScrollView();
 
+        EditorGUILayout.Space(8);
+        EditorGUILayout.LabelField("Perbaiki langsung di scene", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField(
+            "Menyetel ukuran SEMUA objek yang sudah punya model, satu per satu, " +
+            "tanpa menyentuh Scale Factor file FBX. Dipakai kalau satu file dipakai " +
+            "beberapa objek dengan ukuran berbeda.",
+            EditorStyles.wordWrappedMiniLabel);
+
+        var warnaBiru = GUI.backgroundColor;
+        GUI.backgroundColor = new Color(0.6f, 0.75f, 0.95f);
+        if (GUILayout.Button("Setel ukuran semua objek di scene", GUILayout.Height(34)))
+            SetelSemuaDiScene();
+        GUI.backgroundColor = warnaBiru;
+
         EditorGUILayout.Space(6);
 
         if (perluUbah == 0)
@@ -148,6 +174,125 @@ public class CekUkuranWindow : EditorWindow
                 "Setelah ini, buka Last Commit > Pasang Model ke Blockout lalu klik tombol hijau, " +
                 "supaya collidernya ikut menyesuaikan.", EditorStyles.miniLabel);
         }
+    }
+
+    // Menyetel skala tiap objek sendiri-sendiri. Berbeda dari Scale Factor,
+    // yang berlaku untuk seluruh objek yang memakai file FBX yang sama.
+    void SetelSemuaDiScene()
+    {
+        var akar = GameObject.Find("Kedai");
+        if (akar == null)
+        {
+            EditorUtility.DisplayDialog("Objek 'Kedai' tidak ada", "Buka dulu scene Kedai.", "OK");
+            return;
+        }
+
+        int diubah = 0, sudahPas = 0, dilewati = 0;
+        var catatan = new System.Text.StringBuilder();
+
+        foreach (var t in akar.GetComponentsInChildren<Transform>(true))
+        {
+            Transform model = null;
+            for (int c = 0; c < t.childCount; c++)
+                if (t.GetChild(c).name == "Model") model = t.GetChild(c);
+            if (model == null) continue;
+
+            if (Dilewati(t.name)) { dilewati++; continue; }
+
+            Bounds b;
+            if (!HitungBounds(model.gameObject, out b) || b.size.y < 0.0001f) { dilewati++; continue; }
+
+            float target = TinggiWajar(t.name);
+            float f = target / b.size.y;
+
+            if (f < 0.01f || f > 100f) { dilewati++; continue; }
+            if (Mathf.Abs(f - 1f) < 0.03f) { sudahPas++; continue; }
+
+            Undo.RecordObject(model, "Setel ukuran " + t.name);
+
+            float alasLama = b.min.y;
+            model.localScale = new Vector3(
+                model.localScale.x * f, model.localScale.y * f, model.localScale.z * f);
+
+            // jaga supaya alasnya tetap di tempat semula, tidak melayang atau tenggelam
+            Bounds b2;
+            if (HitungBounds(model.gameObject, out b2))
+                model.position += new Vector3(0f, alasLama - b2.min.y, 0f);
+
+            PasangUlangCollider(t.gameObject);
+
+            catatan.AppendLine("  " + t.name + " : " + b.size.y.ToString("0.00") +
+                               " m jadi " + target.ToString("0.00") + " m");
+            diubah++;
+        }
+
+        EditorSceneManager.MarkAllScenesDirty();
+        Hitung();
+
+        Debug.Log("Setel ukuran di scene:\n" + catatan);
+        EditorUtility.DisplayDialog("Selesai",
+            diubah + " objek disetel ulang ukurannya.\n" +
+            sudahPas + " sudah pas.\n" +
+            dilewati + " dilewati (benda pipih atau bagian bangunan).\n\n" +
+            "Benda yang menumpang di atas meja mungkin perlu didudukkan ulang: " +
+            "jalankan Last Commit > Rapikan Tata Letak sesudah ini.\n\n" +
+            "Salah? Ctrl+Z. Jangan lupa Ctrl+S.", "OK");
+    }
+
+    // Benda pipih dan bagian bangunan tidak boleh diukur dari tingginya
+    static bool Dilewati(string nama)
+    {
+        return nama.StartsWith("Keset")
+            || nama.StartsWith("Poster")
+            || nama.StartsWith("Jendela")
+            || nama.StartsWith("Dinding")
+            || nama.StartsWith("Lantai")
+            || nama.StartsWith("Plafon");
+    }
+
+    static void PasangUlangCollider(GameObject target)
+    {
+        var bc = target.GetComponent<BoxCollider>();
+        var cap = target.GetComponent<CapsuleCollider>();
+        if (bc == null && cap == null) return;
+
+        Bounds b;
+        if (!HitungBounds(target, out b) || b.size.sqrMagnitude < 0.000001f) return;
+
+        var skala = target.transform.lossyScale;
+
+        if (bc != null)
+        {
+            Undo.RecordObject(bc, "Sesuaikan collider");
+            bc.center = target.transform.InverseTransformPoint(b.center);
+            bc.size = new Vector3(
+                b.size.x / Mathf.Max(0.0001f, skala.x),
+                b.size.y / Mathf.Max(0.0001f, skala.y),
+                b.size.z / Mathf.Max(0.0001f, skala.z));
+        }
+
+        if (cap != null)
+        {
+            Undo.RecordObject(cap, "Sesuaikan collider");
+            float tinggi = Mathf.Max(0.5f, b.size.y / Mathf.Max(0.0001f, skala.y));
+            cap.direction = 1;                     // sumbu Y
+            cap.height = tinggi;
+            cap.center = new Vector3(0f, tinggi * 0.5f, 0f);
+            cap.radius = Mathf.Clamp(
+                Mathf.Max(b.size.x, b.size.z) * 0.5f / Mathf.Max(0.0001f, skala.x),
+                0.15f, 0.45f);
+        }
+    }
+
+    static bool HitungBounds(GameObject go, out Bounds hasil)
+    {
+        hasil = new Bounds(go.transform.position, Vector3.zero);
+        var rends = go.GetComponentsInChildren<Renderer>(true);
+        if (rends.Length == 0) return false;
+
+        hasil = rends[0].bounds;
+        for (int i = 1; i < rends.Length; i++) hasil.Encapsulate(rends[i].bounds);
+        return true;
     }
 
     void Hitung()
