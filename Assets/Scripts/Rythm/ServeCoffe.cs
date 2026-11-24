@@ -3,32 +3,35 @@ using TMPro;
 
 public class ServeCoffee : MonoBehaviour
 {
+    public static float LastServeTime;
+
     public ScoreManager score;
+    public RhythmController controller;
     public TMP_Text customerText;
     public KeyCode serveKey = KeyCode.E;
 
     void Start()
     {
-        customerText.text = "";
+        if (customerText != null) customerText.text = "";
     }
 
     void Update()
     {
+        if (controller != null && controller.IsRunning) return;
         if (score.coffeeReady && Input.GetKeyDown(serveKey))
             Serve();
     }
 
-    // Nanti bisa dipanggil dari interaksi di meja pelanggan
     public void Serve()
     {
         if (!score.coffeeReady) return;
         score.coffeeReady = false;
+        LastServeTime = Time.time;
 
         string result = GameState.Instance != null
             ? GameState.Instance.ApplyCoffee(score.lastAccuracy)
             : "";
 
-        score.summaryText.text = "";
         customerText.text = result;
     }
 }
