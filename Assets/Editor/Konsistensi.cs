@@ -23,7 +23,7 @@ public class KonsistensiWindow : EditorWindow
     TMP_FontAsset fontIsi;
     bool sudahTebak;
 
-    [MenuItem("Last Commit/Konsistensi Font dan Warna")]
+    [MenuItem(MenuLastCommit.SISTEM + "4. Konsistensi Font dan Warna", false, 4)]
     public static void Buka()
     {
         var w = GetWindow<KonsistensiWindow>("Konsistensi");

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 // Semua kalimat pelanggan umum (tampil di kotak dialog). Ubah teks di aset ini, kodenya tidak perlu disentuh.
-// Dibuat otomatis lewat Last Commit > Jalur B > 4. Pasang Antrean Pelanggan.
+// Dibuat otomatis lewat Last Commit > 3 Karakter dan NPC > 3. Pasang Antrean Pelanggan.
 [CreateAssetMenu(fileName = "Kalimat_Pelanggan", menuName = "Last Commit/Kalimat Pelanggan")]
 public class KalimatPelanggan : ScriptableObject
 {

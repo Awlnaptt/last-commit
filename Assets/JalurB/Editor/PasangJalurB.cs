@@ -1,10 +1,7 @@
-// PasangJalurB.cs — langkah 1: manager, data ekonomi, dialog, pintu, laptop.
+// PasangJalurB.cs — menu 2 Sistem dan UI > 2: manager, data ekonomi, dialog, pintu, laptop.
 //
-// Menu: Last Commit > Jalur B > 1. Pasang Manager dan Data
-// Langkah lain ada di file terpisah supaya bisa diperbaiki sendiri-sendiri:
-//   2. Buat Data Karakter     (PasangKarakter.cs)
-//   3. Pasang NPC             (PasangNPC.cs)
-//   4. Pasang Antrean Pelanggan (PasangAntrean.cs)
+// Karakter, NPC, dan antrean ada di file terpisah (menu 3 Karakter dan NPC) supaya bisa diperbaiki sendiri-sendiri:
+//   PasangKarakter.cs, PasangNPC.cs, PasangAntrean.cs
 //
 // Aset yang SUDAH ADA tidak ditimpa, jadi angka dan teks hasil editanmu aman.
 // Aman dijalankan berulang kali.
@@ -13,12 +10,11 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using static AlatEditor;
 
 public static class PasangJalurB
 {
-    const string DATA = AlatEditor.DATA;
-
-    [MenuItem("Last Commit/Jalur B/1. Pasang Manager dan Data", false, 1)]
+    [MenuItem(MenuLastCommit.SISTEM + "2. Pasang Manager dan Data", false, 2)]
     public static void Pasang()
     {
         var kedai = GameObject.Find("Kedai");
@@ -134,7 +130,7 @@ public static class PasangJalurB
         var mesin = Cari(kedai.transform, "MesinKopi");
         if (mesin != null) PastikanCollider(mesin.gameObject);
 
-        // NPC dipasang terpisah lewat langkah 3 (PasangNPC.cs). Dialognya dibuat di sini.
+        // NPC dipasang terpisah lewat 3 Karakter dan NPC > 2 (PasangNPC.cs). Dialognya dibuat di sini.
         laporan.Add("Dialog NPC dibuat: " + npc1.name + ", " + npc2.name + ", " + npc3.name);
 
         // ---------- 4. Interactor sementara ----------
@@ -147,7 +143,7 @@ public static class PasangJalurB
 
         EditorUtility.DisplayDialog("Jalur B terpasang",
             string.Join("\n", laporan) +
-            "\n\nData ada di " + DATA + ".\nLanjutkan ke langkah 2, 3, dan 4 di menu yang sama. Jangan lupa Ctrl+S.", "OK");
+            "\n\nData ada di " + DATA + ".\nLanjutkan ke menu 3 Karakter dan NPC (nomor 1, 2, 3). Jangan lupa Ctrl+S.", "OK");
     }
 
     // ---------- Pembantu data ----------
@@ -178,59 +174,4 @@ public static class PasangJalurB
             d.pilihan = pilihan ?? new PilihanDialog[0];
             d.ketenanganSaatSelesai = ketenangan;
         });
-
-    // Buat aset hanya kalau belum ada. Yang sudah ada dibiarkan.
-    static T Aset<T>(string path, System.Action<T> isi) where T : ScriptableObject
-    {
-        var ada = AssetDatabase.LoadAssetAtPath<T>(path);
-        if (ada != null) return ada;
-
-        var baru = ScriptableObject.CreateInstance<T>();
-        isi(baru);
-        AssetDatabase.CreateAsset(baru, path);
-        return baru;
-    }
-
-    static void Folder(string path)
-    {
-        if (AssetDatabase.IsValidFolder(path)) return;
-        int i = path.LastIndexOf('/');
-        Folder(path.Substring(0, i));
-        AssetDatabase.CreateFolder(path.Substring(0, i), path.Substring(i + 1));
-    }
-
-    // ---------- Pembantu scene ----------
-
-    static T Komponen<T>(GameObject go) where T : Component
-    {
-        var c = go.GetComponent<T>();
-        return c != null ? c : Undo.AddComponent<T>(go);
-    }
-
-    static Transform Cari(Transform akar, string nama)
-    {
-        foreach (var t in akar.GetComponentsInChildren<Transform>(true))
-            if (t.name == nama) return t;
-        return null;
-    }
-
-    // Raycast butuh collider. Kalau belum ada, buat BoxCollider seukuran semua renderer anaknya.
-    static void PastikanCollider(GameObject go)
-    {
-        if (go.GetComponentInChildren<Collider>(true) != null) return;
-
-        var rs = go.GetComponentsInChildren<Renderer>(true);
-        if (rs.Length == 0) return;
-
-        Bounds b = rs[0].bounds;
-        foreach (var r in rs) b.Encapsulate(r.bounds);
-
-        var box = Undo.AddComponent<BoxCollider>(go);
-        box.center = go.transform.InverseTransformPoint(b.center);
-        var s = go.transform.lossyScale;
-        box.size = new Vector3(
-            b.size.x / Mathf.Max(0.0001f, Mathf.Abs(s.x)),
-            b.size.y / Mathf.Max(0.0001f, Mathf.Abs(s.y)),
-            b.size.z / Mathf.Max(0.0001f, Mathf.Abs(s.z)));
-    }
 }

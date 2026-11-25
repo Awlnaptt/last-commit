@@ -27,7 +27,7 @@ public class DayManager : MonoBehaviour
     [Header("Hari")]
     public int totalHari = 5;
     public float durasiShift = 240f;
-    public int hariTahap2 = 4;
+    [Tooltip("Objek tahap visual 2. Menyala setelah renovasi dibeli (lihat DekorBertahap), bukan otomatis per hari.")]
     public string namaObjekTahap2 = "Tahap2";
 
     [Header("Monolog (index 0 = hari 1, boleh kosong)")]
@@ -65,6 +65,16 @@ public class DayManager : MonoBehaviour
     public event Action<int> OnShiftMulai;
     public event Action<int> OnShiftSelesai;
     public event Action<int> OnHariDiulang;
+    // Monolog pagi selesai (dipakai DekorBertahap untuk belanja dekor dan menjelaskannya).
+    public event Action<int> OnMonologPagiSelesai;
+
+    // Tahap visual 2 (GDD slide 19) tidak lagi gratis: menyala setelah renovasi dibeli (DekorBertahap).
+    public bool Tahap2Aktif { get; private set; }
+    public void AktifkanTahap2()
+    {
+        Tahap2Aktif = true;
+        if (tahap2 != null) tahap2.SetActive(true);
+    }
 
     // Keadaan tepat saat kedai dibuka, untuk "Ulangi Hari".
     int uangSaatBuka, ketenanganSaatBuka;
@@ -113,11 +123,11 @@ public class DayManager : MonoBehaviour
         HariIni = hari;
         KetenanganAwalHari = KetenanganTracker.Instance.Nilai;
         EconomyManager.Instance.ResetHarian();
-        if (tahap2 != null) tahap2.SetActive(hari >= hariTahap2);
+        if (tahap2 != null) tahap2.SetActive(Tahap2Aktif);
 
         KunciKursor(true);
         GantiFase(FaseHari.Pagi);
-        DialogueManager.Instance.Mulai(Ambil(monologPagi, hari), null, Batin);
+        DialogueManager.Instance.Mulai(Ambil(monologPagi, hari), _ => OnMonologPagiSelesai?.Invoke(hari), Batin);
     }
 
     // Dipanggil pintu (E) saat pagi.

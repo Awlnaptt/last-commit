@@ -1,7 +1,7 @@
 using UnityEngine;
 
 // Satu aset = satu model karakter beserta animasinya.
-// Dibuat otomatis lewat Last Commit > Jalur B > 2. Buat Data Karakter.
+// Dibuat otomatis lewat Last Commit > 3 Karakter dan NPC > 1. Buat Data Karakter.
 [CreateAssetMenu(fileName = "Karakter_", menuName = "Last Commit/Karakter")]
 public class ModelKarakter : ScriptableObject
 {

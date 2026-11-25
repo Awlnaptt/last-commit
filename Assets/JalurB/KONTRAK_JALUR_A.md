@@ -33,3 +33,9 @@ Ambang "Miss banyak" diputuskan Jalur A, Jalur B hanya menerima hasil akhirnya.
 - Interactor: `hit.collider.GetComponentInParent<IInteraktif>()`, cek `BisaDipakai`,
   tampilkan `Petunjuk` lewat `HUDUI.SetPetunjuk(...)`, panggil `Interaksi()` saat E
 - Kalau Interactor-mu sudah jadi, hapus `UjiJalurB` dari kamera dan folder `Assets/JalurB/_Sementara`
+
+## Cuaca dan atmosfer (milik Jalur B, boleh dibaca)
+- Petir di hari hujan deras: dengarkan `CuacaHarian.OnPetir` untuk suara guntur
+- `CuacaHarian.Terang` (0..1,5) dan nama cuaca hari ini: `FindAnyObjectByType<CuacaHarian>().NamaCuacaHariIni`
+- Post-processing dinyalakan otomatis di semua kamera Base (`renderPostProcessing = true`), jadi kamera pemain tidak perlu diatur
+- Mesin kopi otomatis diberi komponen `UapKopi` (uap menebal saat `SedangMeracik`)

@@ -23,7 +23,7 @@ public static class BuatUI
 
     const string FOLDER = "Assets/Prefabs/UI";
 
-    [MenuItem("Last Commit/Buat Layar UI")]
+    [MenuItem(MenuLastCommit.SISTEM + "1. Buat Layar UI", false, 1)]
     public static void Buat()
     {
         if (TMP_Settings.defaultFontAsset == null)

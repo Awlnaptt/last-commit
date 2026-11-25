@@ -72,7 +72,7 @@ public class CekUkuranWindow : EditorWindow
     List<Baris> hasil = new List<Baris>();
     Vector2 scroll;
 
-    [MenuItem("Last Commit/Cek Ukuran Model")]
+    [MenuItem(MenuLastCommit.ALAT + "Cek Ukuran Model", false, 1)]
     public static void Buka()
     {
         var w = GetWindow<CekUkuranWindow>("Cek Ukuran");

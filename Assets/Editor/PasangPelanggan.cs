@@ -1,7 +1,7 @@
 // PasangPelanggan.cs — menaruh pelanggan di kedai
 //
 // Taruh di: Assets/Editor/PasangPelanggan.cs
-// Buka lewat menu: Last Commit > Pasang Pelanggan
+// Buka lewat menu: Last Commit > 3 Karakter dan NPC > Pasang Pelanggan (versi lama)
 //
 // Alurnya dua tahap, dan sengaja dipisah:
 //   1. Buat titik posisi  — bikin objek kosong penanda tempat berdiri pelanggan
@@ -66,7 +66,7 @@ public class PasangPelangganWindow : EditorWindow
     bool pakaiCollider = true;
     Vector2 scroll;
 
-    [MenuItem("Last Commit/Pasang Pelanggan")]
+    [MenuItem(MenuLastCommit.KARAKTER + "Pasang Pelanggan (versi lama, sudah diganti nomor 3)", false, 20)]
     public static void Buka()
     {
         var w = GetWindow<PasangPelangganWindow>("Pasang Pelanggan");
