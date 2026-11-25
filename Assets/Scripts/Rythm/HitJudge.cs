@@ -14,6 +14,7 @@ public class HitJudge : MonoBehaviour
     NoteMover[] notes;
     KeyCode[] keys = { KeyCode.D, KeyCode.F, KeyCode.J };
     bool finished;
+
     float PW => perfectWindow * (GameState.Instance != null ? GameState.Instance.PerfectMult : 1f);
     float GW => goodWindow * (GameState.Instance != null ? GameState.Instance.GoodMult : 1f);
 
@@ -26,6 +27,7 @@ public class HitJudge : MonoBehaviour
     public void SetNotes(NoteMover[] n)
     {
         notes = n;
+        finished = false;
     }
 
     float Diff(NoteMover n)
@@ -72,7 +74,6 @@ public class HitJudge : MonoBehaviour
         n.gameObject.SetActive(false);
         resultText.text = result;
         if (score != null) score.Register(result);
-        Debug.Log(result);
         CheckFinished();
     }
 

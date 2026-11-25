@@ -7,12 +7,17 @@ public class ScoreManager : MonoBehaviour
     public TMP_Text summaryText;
 
     public int perfect, good, miss, combo, maxCombo;
-
     public float lastAccuracy;
     public bool coffeeReady;
-    void Start()
+
+    void Start() { ResetAll(); }
+
+    public void ResetAll()
     {
-        summaryText.text = "";
+        perfect = good = miss = combo = maxCombo = 0;
+        lastAccuracy = 0f;
+        coffeeReady = false;
+        if (summaryText != null) summaryText.text = "";
         UpdateCombo();
     }
 
@@ -33,7 +38,7 @@ public class ScoreManager : MonoBehaviour
 
     void UpdateCombo()
     {
-        comboText.text = combo > 1 ? "Combo x" + combo : "";
+        if (comboText != null) comboText.text = combo > 1 ? "Combo x" + combo : "";
     }
 
     public void ShowSummary()
@@ -49,7 +54,6 @@ public class ScoreManager : MonoBehaviour
             "Good: " + good + "\n" +
             "Miss: " + miss + "\n" +
             "Combo terpanjang: " + maxCombo + "\n" +
-            "Akurasi: " + acc.ToString("F0") + "%\n\n" +
-            "Kopi selesai! Tekan E untuk mengantar ke pelanggan.";
+            "Akurasi: " + acc.ToString("F0") + "%";
     }
 }
