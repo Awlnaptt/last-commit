@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 // supaya fitur tetap jalan walaupun menu editornya belum dijalankan / belum disimpan.
 //   - PapanHarga di objek PapanMenu (plus collider supaya bisa ditekan E)
 //   - MenuJedaUI di JalurB_Managers
-//   - SiklusCahaya (pagi -> malam) di JalurB_Managers
+//   - SiklusCahaya (pagi -> malam) dan IntroSinematik di JalurB_Managers
 //   - Paket atmosfer (PasangAtmosfer): cuaca harian, post-processing, uap kopi, kota luar jendela,
 //     foto wisuda, dan catatan Ibu
 // Kalau komponennya sudah ada di scene, tidak ada yang diubah.
@@ -26,6 +26,8 @@ public static class PasangOtomatis
             managers.AddComponent<MenuJedaUI>();
         if (managers != null && managers.GetComponent<SiklusCahaya>() == null)
             managers.AddComponent<SiklusCahaya>();
+        if (managers != null && managers.GetComponent<IntroSinematik>() == null)
+            managers.AddComponent<IntroSinematik>();
 
         PasangAtmosfer.Pastikan();
 

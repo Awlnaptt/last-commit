@@ -58,6 +58,11 @@ public class UjiJalurB : MonoBehaviour
                 petunjuk = target.Petunjuk;
                 if (Tekan(0)) target.Interaksi();
             }
+            else if (DiMesinKopi(hit.transform) && DayManager.Instance.Fase == FaseHari.Shift &&
+                     !AreaBarista.DiBalikCounter(cam.transform.position))
+            {
+                petunjuk = "Seduh dari balik counter";   // barista melayani dari sisi dinding, bukan dari antrean
+            }
             else if (DiMesinKopi(hit.transform) && DayManager.Instance.Fase == FaseHari.Shift)
             {
                 bool ada = OrderManager.Instance.PesananAktif != null;

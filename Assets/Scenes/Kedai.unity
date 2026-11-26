@@ -1488,7 +1488,7 @@ Transform:
   m_GameObject: {fileID: 173278452}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 3.1000001, y: 1, z: 1.8000004}
+  m_LocalPosition: {x: 3.091, y: 1, z: 1.647}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3495,7 +3495,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e51d4d872cb9e234bbc39519f0685f55, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.65
+      value: 3.402
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e51d4d872cb9e234bbc39519f0685f55, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3503,7 +3503,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e51d4d872cb9e234bbc39519f0685f55, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.9500004
+      value: 1.759
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e51d4d872cb9e234bbc39519f0685f55, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5529,7 +5529,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5eee6d8deac8c2d4ea4d3a4141ee5c9c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.23
+      value: 3.143
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5eee6d8deac8c2d4ea4d3a4141ee5c9c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5537,7 +5537,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5eee6d8deac8c2d4ea4d3a4141ee5c9c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.56
+      value: -0.771
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5eee6d8deac8c2d4ea4d3a4141ee5c9c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -14498,7 +14498,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fd621a97a6185344e9444fff6378159c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.441
+      value: 3.518
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fd621a97a6185344e9444fff6378159c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -14506,7 +14506,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fd621a97a6185344e9444fff6378159c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.354
+      value: -0.357
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fd621a97a6185344e9444fff6378159c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -15706,7 +15706,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1304686220}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: -0.7071068}
   m_LocalPosition: {x: 3.4, y: 1.25, z: 1.2800002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -17834,6 +17834,7 @@ MonoBehaviour:
   sensitivitas: 0.14
   tinggiMata: 1.6
   batasPitch: 70
+  kecepatanPanah: 60
   gravitasi: -18
 --- !u!143 &1568818806
 CharacterController:
@@ -18693,6 +18694,7 @@ GameObject:
   - component: {fileID: 1661175434}
   - component: {fileID: 1661175433}
   - component: {fileID: 1661175435}
+  - component: {fileID: 1661175436}
   m_Layer: 0
   m_Name: JalurB_Managers
   m_TagString: Untagged
@@ -19018,6 +19020,63 @@ MonoBehaviour:
   minTahan: 1.5
   maksTahan: 30
   durasiPudar: 1.8
+--- !u!114 &1661175436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1661175422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 718349967fc7a6b429161d9e8c89481a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aktif: 1
+  sekaliSaja: 1
+  hurufPerDetik: 30
+  pudar: 0.6
+  shot:
+  - catatan: 'Udara: jalan di depan kedai'
+    posisiAwal: {x: -9, y: 7.5, z: 2.5}
+    posisiAkhir: {x: -1, y: 7, z: 3}
+    lihatAwal: {x: -4, y: 0.5, z: 15}
+    lihatAkhir: {x: 4, y: 0.5, z: 15}
+    objekDilihat: 
+    fov: 55
+    durasi: 7
+    teks: Kota ini tidak pernah benar-benar berhenti.
+  - catatan: Dari seberang trotoar ke jendela kedai
+    posisiAwal: {x: 3.2, y: 1.5, z: 7.2}
+    posisiAkhir: {x: 0.6, y: 1.45, z: 7.2}
+    lihatAwal: {x: 1.8, y: 1.4, z: 4}
+    lihatAkhir: {x: 0.6, y: 1.35, z: 4}
+    objekDilihat: 
+    fov: 40
+    durasi: 6.5
+    teks: Di sudut jalan ini, ada kedai kopi kecil yang baru dibuka.
+  - catatan: Dari pintu menuju mesin kopi
+    posisiAwal: {x: -3.4, y: 1.7, z: -3.2}
+    posisiAkhir: {x: -1.2, y: 1.6, z: -1.6}
+    lihatAwal: {x: 4, y: 1.1, z: 0.5}
+    lihatAkhir: {x: 4.2, y: 1.1, z: 1.2}
+    objekDilihat: MesinKopi
+    fov: 55
+    durasi: 6.5
+    teks: Seminggu lalu ia wisuda. Bukan kantor yang ia pilih, tapi mesin kopi.
+  - catatan: 'Meja sudut: laptop lama dan foto wisuda'
+    posisiAwal: {x: 2.1, y: 1.8, z: -1.4}
+    posisiAkhir: {x: 2.8, y: 1.55, z: -2.3}
+    lihatAwal: {x: 3.55, y: 1.1, z: -3.7}
+    lihatAkhir: {x: 3.6, y: 1, z: -3.7}
+    objekDilihat: MejaSudut
+    fov: 45
+    durasi: 7
+    teks: Tawaran kerja di dunia IT masih menunggu. Lima hari untuk memutuskan.
+  judul: LAST COMMIT
+  subjudul: Lima hari. Satu keputusan.
+  durasiJudul: 4
+  versiData: 2
 --- !u!21 &1663277831
 Material:
   serializedVersion: 8
@@ -20016,6 +20075,7 @@ GameObject:
   - component: {fileID: 1760431374}
   - component: {fileID: 1760431373}
   - component: {fileID: 1760431372}
+  - component: {fileID: 1760431375}
   m_Layer: 0
   m_Name: LuarJendela
   m_TagString: Untagged
@@ -20128,6 +20188,33 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1760431370}
   m_Mesh: {fileID: 0}
+--- !u!114 &1760431375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1760431370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28dac95d7eeb1ec41bf9d5da27a4a627, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maksPejalan: 6
+  pejalanPerMenit: 10
+  hujanTanpaPejalan: 0.65
+  kecepatanJalan: {x: 1.1, y: 1.5}
+  lajurTrotoar:
+  - 5
+  - 5.9
+  maksMobil: 4
+  mobilPerMenit: 9
+  kecepatanMobil: {x: 6, y: 9}
+  lajurJalan:
+  - 8.6
+  - 11.6
+  xMulai: -16
+  xAkhir: 14
 --- !u!1 &1764010848
 GameObject:
   m_ObjectHideFlags: 0
@@ -20697,7 +20784,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 59186ca7e1cc7944ab845561aae39362, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.3000002
+      value: 0.37
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 59186ca7e1cc7944ab845561aae39362, type: 3}
       propertyPath: m_LocalPosition.y
@@ -20705,23 +20792,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 59186ca7e1cc7944ab845561aae39362, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.35000002
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 59186ca7e1cc7944ab845561aae39362, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: -0.0069325864
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 59186ca7e1cc7944ab845561aae39362, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 59186ca7e1cc7944ab845561aae39362, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.99997604
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 59186ca7e1cc7944ab845561aae39362, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 59186ca7e1cc7944ab845561aae39362, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -20729,7 +20816,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 59186ca7e1cc7944ab845561aae39362, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180.794
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 59186ca7e1cc7944ab845561aae39362, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

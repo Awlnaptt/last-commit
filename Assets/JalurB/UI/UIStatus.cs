@@ -9,5 +9,6 @@ public static class UIStatus
         MenuUpgradeUI.Terbuka || PapanHarga.Terbuka || MenuJedaUI.Terbuka;
 
     public static bool MenghalangiPemain =>
-        AdaLayarTerbuka || (DialogueManager.Instance != null && DialogueManager.Instance.IsActive);
+        AdaLayarTerbuka || IntroSinematik.Berjalan ||
+        (DialogueManager.Instance != null && DialogueManager.Instance.IsActive);
 }

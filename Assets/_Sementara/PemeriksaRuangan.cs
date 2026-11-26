@@ -10,7 +10,7 @@
 //
 // Pasang lewat menu: Last Commit > Pasang Pemain Sementara
 //
-// Kontrol saat Play:  W A S D jalan  ·  Mouse lihat  ·  Shift lari  ·  Esc lepas mouse
+// Kontrol saat Play:  W A S D jalan  ·  Mouse / tombol panah lihat  ·  Shift lari  ·  Esc lepas mouse
 
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM
@@ -32,6 +32,8 @@ public class PemeriksaRuangan : MonoBehaviour
     public float sensitivitas = 0.14f;
     public float tinggiMata = 1.6f;
     public float batasPitch = 70f;
+    [Tooltip("Derajat per detik saat menoleh dengan tombol panah (halus untuk rekaman video)")]
+    public float kecepatanPanah = 60f;
 
     [Header("Fisika")]
     public float gravitasi = -18f;
@@ -107,10 +109,17 @@ public class PemeriksaRuangan : MonoBehaviour
             if (k.aKey.isPressed) gerak.x -= 1f;
             lari = k.leftShiftKey.isPressed;
             lepas = k.escapeKey.wasPressedThisFrame;
+
+            // Tombol panah: menoleh dengan kecepatan tetap (dibagi sensitivitas karena nanti dikali lagi).
+            float panah = kecepatanPanah * Time.deltaTime / Mathf.Max(0.0001f, sensitivitas);
+            if (k.rightArrowKey.isPressed) lihat.x += panah;
+            if (k.leftArrowKey.isPressed) lihat.x -= panah;
+            if (k.upArrowKey.isPressed) lihat.y += panah * 0.6f;
+            if (k.downArrowKey.isPressed) lihat.y -= panah * 0.6f;
         }
 
         var m = Mouse.current;
-        if (m != null) lihat = m.delta.ReadValue();
+        if (m != null) lihat += m.delta.ReadValue();
 #else
         gerak = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         lihat = new Vector2(Input.GetAxisRaw("Mouse X") * 12f, Input.GetAxisRaw("Mouse Y") * 12f);

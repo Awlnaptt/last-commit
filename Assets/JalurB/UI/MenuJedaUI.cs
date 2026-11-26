@@ -48,7 +48,7 @@ public class MenuJedaUI : MonoBehaviour
 
     void Update()
     {
-        if (!EscDitekan()) return;
+        if (IntroSinematik.Berjalan || !EscDitekan()) return;   // Esc saat intro = lewati intro
         if (Terbuka) Tutup();
         else if (PapanHarga.Terbuka) PapanHarga.TutupYangTerbuka();   // Esc menutup papan dulu
         else if (!MenuUpgradeUI.Terbuka) Buka();

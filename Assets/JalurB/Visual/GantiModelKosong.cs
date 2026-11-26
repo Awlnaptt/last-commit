@@ -17,6 +17,39 @@ public static class GantiModelKosong
         if (TempelGambar(kedai, "Poster_Selatan", "T_Poster_Nusantara")) laporan.Add("Poster_Selatan: gambar \"Biji Kopi Nusantara\"");
         if (TempelGambar(kedai, "Keset", "T_Keset")) laporan.Add("Keset: tulisan \"Selamat Datang\"");
         GantiTumpukanBuku(kedai, laporan);
+        GantiKipas(kedai, laporan);
+    }
+
+    // Kipas Kenney satu mesh utuh: kalau diputar, batang dan dudukannya ikut berputar (dan bergeser,
+    // karena porosnya di tengah kotak pembatas, bukan di batang). Diganti kipas kode yang dipisah:
+    // dudukan + batang + rumah motor DIAM, hanya anak "Baling" yang berputar di porosnya sendiri.
+    static void GantiKipas(Transform kedai, List<string> laporan)
+    {
+        foreach (var putar in kedai.GetComponentsInChildren<Berputar>(true))
+        {
+            var t = putar.transform;
+            if (t.GetComponent<BalingKipas>() != null || t.Find("KipasKode") != null) continue;
+            if (!Ukur(t, out var b)) continue;
+
+            float laju = putar.derajatPerDetik;
+            putar.enabled = false;
+            t.localRotation = Quaternion.identity;
+            MatikanTampilan(t);
+
+            var kipas = new GameObject("KipasKode");
+            kipas.transform.SetParent(t, false);
+            kipas.transform.SetPositionAndRotation(new Vector3(b.center.x, b.max.y, b.center.z), Quaternion.identity);
+            kipas.transform.localScale = new Vector3(1f / t.lossyScale.x, 1f / t.lossyScale.y, 1f / t.lossyScale.z);
+            var badan = kipas.AddComponent<KipasLangit>();
+            badan.BangunUlang();
+
+            var baling = new GameObject("Baling");
+            baling.transform.SetParent(kipas.transform, false);
+            baling.transform.localPosition = new Vector3(0f, badan.YBaling, 0f);
+            baling.AddComponent<BalingKipas>().BangunUlang();
+            baling.AddComponent<Berputar>().derajatPerDetik = laju;
+            laporan.Add($"{t.name}: kipas kode, hanya baling-baling yang berputar");
+        }
     }
 
     // Dinding utara/selatan sepanjang x -5..5 dan dinding barat/timur sepanjang z -4..4, tebal 0,1 m.

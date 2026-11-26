@@ -48,8 +48,13 @@ public class TransisiHari : MonoBehaviour
         switch (keadaan)
         {
             case Keadaan.Tahan:
+                // Selama intro sinematik layar ini disembunyikan (kalau tidak, menutupi gambar intro)
+                // dan waktu tahannya belum dihitung.
+                if (IntroSinematik.Berjalan) { grup.alpha = 0f; waktu = 0f; break; }
+                grup.alpha = 1f;
                 waktu += Time.deltaTime;
-                bool monologSelesai = DialogueManager.Instance == null || !DialogueManager.Instance.IsActive;
+                bool monologSelesai = !IntroSinematik.Berjalan &&
+                                      (DialogueManager.Instance == null || !DialogueManager.Instance.IsActive);
                 if ((waktu >= minTahan && monologSelesai) || waktu >= maksTahan) { keadaan = Keadaan.Pudar; waktu = 0f; }
                 break;
 

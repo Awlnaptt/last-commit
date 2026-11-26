@@ -127,7 +127,9 @@ public class DayManager : MonoBehaviour
 
         KunciKursor(true);
         GantiFase(FaseHari.Pagi);
-        DialogueManager.Instance.Mulai(Ambil(monologPagi, hari), _ => OnMonologPagiSelesai?.Invoke(hari), Batin);
+        // Hari 1: monolog pagi menunggu intro sinematik selesai (langsung kalau tidak ada intro).
+        IntroSinematik.SetelahSelesai(() =>
+            DialogueManager.Instance.Mulai(Ambil(monologPagi, hari), _ => OnMonologPagiSelesai?.Invoke(hari), Batin));
     }
 
     // Dipanggil pintu (E) saat pagi.

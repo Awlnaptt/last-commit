@@ -11,11 +11,12 @@ public static class PasangAtmosfer
     [System.Flags]
     public enum Bagian
     {
-        Suasana = 1,        // cuaca, post-processing, layar "Hari N", uap kopi, kota luar jendela
+        Suasana = 1,        // cuaca, post-processing, layar "Hari N", uap kopi, kota + lalu lintas luar jendela
         GantiModel = 2,     // tiang pojok, rak berisi buku, lampu gantung, poster, keset, tumpukan buku
         Dekor = 4,          // kusen pintu dan dekor bertahap per hari
         ObjekCerita = 8,    // foto wisuda dan catatan Ibu
-        Semua = 15,
+        AreaBarista = 16,   // mesin kopi menghadap barista (balik counter)
+        Semua = 31,
     }
 
     public static List<string> Pastikan(Bagian bagian = Bagian.Semua)
@@ -38,6 +39,7 @@ public static class PasangAtmosfer
 
         // Tambal lubang pojok dinding, isi rak buku kosong, ganti dekor kotak polos dengan aset kode.
         if ((bagian & Bagian.GantiModel) != 0) GantiModelKosong.Jalankan(k, laporan);
+        if ((bagian & Bagian.AreaBarista) != 0) global::AreaBarista.Tata(k, laporan);
 
         if (suasana)
         {
@@ -50,6 +52,8 @@ public static class PasangAtmosfer
                 luar.AddComponent<KotaLuar>();
                 laporan.Add("LuarJendela: kota di luar jendela utara");
             }
+            var lj = Cari(k, "LuarJendela");
+            if (lj != null && Tambah<LaluLintasLuar>(lj.gameObject)) laporan.Add("LaluLintasLuar: pejalan kaki dan mobil di luar jendela");
         }
 
         if ((bagian & Bagian.Dekor) != 0) PasangDekor(k, laporan);

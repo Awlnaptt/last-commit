@@ -3,6 +3,7 @@
 //   4 Dekorasi > 3. Pasang Dekor Kode per Hari           (kusen pintu, papan kapur, jam, dekor hari 2-5)
 //   4 Dekorasi > 5. Pasang Objek Cerita                  (foto wisuda, catatan Ibu)
 //   5 Suasana  > 2. Pasang Cahaya, Cuaca, Post-processing (cuaca harian, post-processing, layar "Hari N", uap, kota luar)
+//   1 Ruangan  > 5. Rapikan Area Barista                  (mesin kopi menghadap barista di balik counter)
 
 using System.Collections.Generic;
 using UnityEditor;
@@ -13,9 +14,13 @@ public static class PasangAtmosferMenu
 {
     const string TEKSTUR = "Assets/JalurB/Visual/Resources/JalurB/";
 
+    [MenuItem(MenuLastCommit.RUANGAN + "5. Rapikan Area Barista", false, 5)]
+    static void Barista() => Jalankan(PasangAtmosfer.Bagian.AreaBarista, "Area barista",
+        "Barista berdiri di balik counter (sisi dinding timur) menghadap pelanggan.\nKopi hanya bisa diseduh dari sisi itu.");
+
     [MenuItem(MenuLastCommit.DEKORASI + "2. Ganti Dekor Polos dan Tambal Pojok", false, 2)]
     static void GantiModel() => Jalankan(PasangAtmosfer.Bagian.GantiModel, "Ganti dekor polos",
-        "Objek aslinya tidak dihapus, hanya tampilannya yang dimatikan.");
+        "Objek aslinya tidak dihapus, hanya tampilannya yang dimatikan.\nKipas diganti kipas kode: hanya baling-balingnya yang berputar.");
 
     [MenuItem(MenuLastCommit.DEKORASI + "3. Pasang Dekor Kode per Hari", false, 3)]
     static void Dekor() => Jalankan(PasangAtmosfer.Bagian.Dekor, "Dekor kode per hari",
