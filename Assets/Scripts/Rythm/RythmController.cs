@@ -6,40 +6,26 @@ public class RhythmController : MonoBehaviour
 {
     [Header("Pemain")]
     public GameObject player;
-    public GameObject playerCamera;
 
     [Header("Rhythm")]
     public GameObject rhythmStage;
-    public Camera rhythmCamera;
     public GameObject rhythmCanvas;
     public NoteSpawner spawner;
     public Conductor conductor;
     public ScoreManager score;
-    public TMP_Text customerText;
+    public TMP_Text orderLabel;       // opsional
+
+    [Header("Batas hasil (akurasi %)")]
+    public float perfectThreshold = 85f;
+    public float goodThreshold = 50f;
 
     public bool IsRunning { get; private set; }
 
     MonoBehaviour[] playerScripts;
     bool finishing;
 
-    bool Check()
-    {
-        bool ok = true;
-        if (player == null) { Debug.LogError("RhythmController: kolom Player kosong"); ok = false; }
-        if (playerCamera == null) { Debug.LogError("RhythmController: kolom Player Camera kosong"); ok = false; }
-        if (rhythmStage == null) { Debug.LogError("RhythmController: kolom Rhythm Stage kosong"); ok = false; }
-        if (rhythmCamera == null) { Debug.LogError("RhythmController: kolom Rhythm Camera kosong"); ok = false; }
-        if (rhythmCanvas == null) { Debug.LogError("RhythmController: kolom Rhythm Canvas kosong"); ok = false; }
-        if (spawner == null) { Debug.LogError("RhythmController: kolom Spawner kosong"); ok = false; }
-        if (conductor == null) { Debug.LogError("RhythmController: kolom Conductor kosong"); ok = false; }
-        if (score == null) { Debug.LogError("RhythmController: kolom Score kosong"); ok = false; }
-        if (customerText == null) { Debug.LogError("RhythmController: kolom Customer Text kosong"); ok = false; }
-        return ok;
-    }
-
     void Start()
     {
-        if (!Check()) return;
         playerScripts = player.GetComponents<MonoBehaviour>();
         SetRhythmVisible(false);
     }
@@ -52,28 +38,34 @@ public class RhythmController : MonoBehaviour
 
     public void StartRhythm()
     {
-        if (!Check()) return;
-        if (IsRunning || score.coffeeReady) return;
+        if (IsRunning) return;
+
+        Pesanan p = OrderManager.Instance.MulaiRacik();
+        if (p == null) return;
+
+        var pola = p.menu.polaRitme as PatternData;
+        if (pola != null) spawner.pattern = pola;
+
         IsRunning = true;
         finishing = false;
 
         foreach (var s in playerScripts) s.enabled = false;
-        playerCamera.SetActive(false);
 
         SetRhythmVisible(true);
-        rhythmCamera.depth = 10;
-        var al = rhythmCamera.GetComponent<AudioListener>();
-        if (al == null) al = rhythmCamera.gameObject.AddComponent<AudioListener>();
-        al.enabled = true;
+        if (orderLabel != null) orderLabel.text = "Meracik: " + p.menu.namaTampil;
 
-        customerText.text = "";
+
+        Debug.Log("Rhythm mulai. Pola: " + spawner.pattern.name +
+          ", jumlah note: " + spawner.pattern.notes.Length +
+          ", bpm: " + spawner.pattern.bpm);
+
         score.ResetAll();
         spawner.Begin();
     }
 
     void Update()
     {
-        if (IsRunning && !finishing && score != null && score.coffeeReady)
+        if (IsRunning && !finishing && score.coffeeReady)
             StartCoroutine(Finish());
     }
 
@@ -84,10 +76,14 @@ public class RhythmController : MonoBehaviour
 
         conductor.Stop();
         SetRhythmVisible(false);
-        playerCamera.SetActive(true);
         foreach (var s in playerScripts) s.enabled = true;
 
+        HasilRacik hasil = HasilRacik.Miss;
+        if (score.lastAccuracy >= perfectThreshold) hasil = HasilRacik.Perfect;
+        else if (score.lastAccuracy >= goodThreshold) hasil = HasilRacik.Good;
+
+        score.coffeeReady = false;
+        OrderManager.Instance.SelesaiRacik(hasil);
         IsRunning = false;
-        customerText.text = "Kopi selesai! Tekan E untuk mengantar ke pelanggan.";
     }
 }

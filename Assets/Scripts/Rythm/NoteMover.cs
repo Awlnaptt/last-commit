@@ -12,6 +12,20 @@ public class NoteMover : MonoBehaviour
     public float hitZ = -3f;
     [HideInInspector] public bool judged;
 
+    public Color[] laneColors =
+    {
+        new Color(0.42f, 0.59f, 0.72f),   // D: biru
+        new Color(0.95f, 0.65f, 0.35f),   // F: oranye hangat
+        new Color(0.95f, 0.87f, 0.72f)    // J: krem
+    };
+
+    void Start()
+    {
+        if (lane < 0 || lane >= laneColors.Length) return;
+        foreach (var r in GetComponentsInChildren<Renderer>())
+            r.material.color = laneColors[lane];
+    }
+
     void Update()
     {
         if (conductor == null) return;

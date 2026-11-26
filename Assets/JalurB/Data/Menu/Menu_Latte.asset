@@ -16,4 +16,4 @@ MonoBehaviour:
   hargaDasar: 22000
   hargaWajarMaks: 28000
   hariTersedia: 1
-  polaRitme: {fileID: 0}
+  polaRitme: {fileID: 11400000, guid: cac8178008d1d3541a35973fba0ca475, type: 2}

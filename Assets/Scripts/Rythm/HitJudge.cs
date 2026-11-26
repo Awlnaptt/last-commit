@@ -10,13 +10,14 @@ public class HitJudge : MonoBehaviour
     public float perfectWindow = 0.05f;
     public float goodWindow = 0.12f;
     public float ignoreWindow = 0.30f;
+    public PopText pop;
 
     NoteMover[] notes;
     KeyCode[] keys = { KeyCode.D, KeyCode.F, KeyCode.J };
     bool finished;
 
-    float PW => perfectWindow * (GameState.Instance != null ? GameState.Instance.PerfectMult : 1f);
-    float GW => goodWindow * (GameState.Instance != null ? GameState.Instance.GoodMult : 1f);
+    float PW => perfectWindow * (KetenanganTracker.Instance != null ? KetenanganTracker.Instance.PengaliJendelaPerfect : 1f);
+    float GW => goodWindow * (KetenanganTracker.Instance != null ? KetenanganTracker.Instance.PengaliJendelaGood : 1f);
 
     void Start()
     {
@@ -72,7 +73,7 @@ public class HitJudge : MonoBehaviour
     {
         n.judged = true;
         n.gameObject.SetActive(false);
-        resultText.text = result;
+        if (pop != null) pop.Show(result); else resultText.text = result;
         if (score != null) score.Register(result);
         CheckFinished();
     }

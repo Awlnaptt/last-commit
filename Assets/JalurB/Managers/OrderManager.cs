@@ -74,7 +74,7 @@ public class OrderManager : MonoBehaviour
         // Waktu berhenti saat dialog terbuka, supaya ngobrol dengan pelanggan tetap tidak dihukum.
         if (DialogueManager.Instance != null && DialogueManager.Instance.IsActive) return;
 
-        if (menerima)
+        if (menerima && !SedangMeracik)
         {
             timerDatang -= Time.deltaTime;
             if (timerDatang <= 0f)

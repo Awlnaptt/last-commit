@@ -132,6 +132,8 @@ public class DialogueManager : MonoBehaviour
     // info: pembicara utama. Baris yang pembicaranya sama dengan info.nama memakai potret dan perannya.
     public void Mulai(DialogueData dialog, Action<int> selesai = null, InfoPembicara info = null)
     {
+        if (OrderManager.Instance != null && OrderManager.Instance.SedangMeracik) return;
+
         if (dialog == null || dialog.baris == null || dialog.baris.Length == 0 || layar == null)
         {
             selesai?.Invoke(-1);
@@ -161,10 +163,16 @@ public class DialogueManager : MonoBehaviour
     {
         if (!IsActive)
         {
+            if (OrderManager.Instance != null && OrderManager.Instance.SedangMeracik)
+            {
+                antreUcapan.Clear();
+                sedangUcapan = false;
+                if (layar != null) layar.SetActive(false);
+                return;
+            }
             JalankanUcapan();
             return;
         }
-        if (Time.frameCount == frameMulai || MenuJedaUI.Terbuka) return;
 
         if (modePilih)
         {
