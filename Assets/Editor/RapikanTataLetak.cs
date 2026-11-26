@@ -36,7 +36,7 @@ public static class RapikanTataLetak
     // Tinggi tanaman pot lantai, dari dasar pot sampai pucuk daun
     const float TINGGI_TANAMAN = 1.35f;
 
-    [MenuItem("Last Commit/Rapikan Tata Letak")]
+    [MenuItem(MenuLastCommit.RUANGAN + "3. Rapikan Tata Letak", false, 3)]
     public static void Rapikan()
     {
         var akar = GameObject.Find("Kedai");

@@ -15,7 +15,7 @@ public class PasangModelWindow : EditorWindow
     ModeUkuran mode = ModeUkuran.IsiPenuhKotak;
     Vector2 scroll;
 
-    [MenuItem("Last Commit/Pasang Model ke Blockout")]
+    [MenuItem(MenuLastCommit.RUANGAN + "2. Pasang Model ke Blockout", false, 2)]
     public static void Buka()
     {
         var w = GetWindow<PasangModelWindow>("Pasang Model");

@@ -15,7 +15,7 @@ public static class IsiTahap2
     static readonly Color LOGAM  = new Color(0.25f, 0.23f, 0.21f);
     static readonly Color HANGAT = new Color(1f, 0.74f, 0.44f);
 
-    [MenuItem("Last Commit/Isi Tahap 2")]
+    [MenuItem(MenuLastCommit.DEKORASI + "1. Isi Tahap 2", false, 1)]
     public static void Isi()
     {
         var akar = GameObject.Find("Kedai");

@@ -1,6 +1,5 @@
-// PasangNPC.cs — langkah 3: tiga pelanggan tetap, masing-masing berdiri sendiri.
+// PasangNPC.cs — menu 3 Karakter dan NPC > 2: tiga pelanggan tetap, masing-masing berdiri sendiri.
 //
-// Menu: Last Commit > Jalur B > 3. Pasang NPC
 //
 // Tiap NPC = satu aset NPCData (Assets/JalurB/Data/NPC) + satu titik di Kedai > NPC.
 //   Ganti model/hari/dialog satu NPC -> ubah aset NPC_<nama> saja
@@ -34,7 +33,7 @@ public static class PasangNPC
         new Rencana { file = "Ibu",          nama = "Ibu",      peran = "Keluarga", karakter = "i", hari = 5, sapaan = "Nak, Ibu mampir.", dialog = "Dialog_NPC3_Ibu",          meja = "Meja1", arah = Vector3.right, cadangan = new Vector3(-3.45f, 0f,  1.70f) },
     };
 
-    [MenuItem("Last Commit/Jalur B/3. Pasang NPC", false, 3)]
+    [MenuItem(MenuLastCommit.KARAKTER + "2. Pasang NPC Tetap", false, 2)]
     public static void Pasang()
     {
         var kedai = AlatEditor.Kedai();
@@ -74,7 +73,7 @@ public static class PasangNPC
 
             string catatan = r.nama + " (hari " + r.hari + ", " + r.meja + ")";
             if (data.karakter == null) catatan += " — model BELUM ada";
-            if (data.dialog == null) catatan += " — dialog BELUM ada, jalankan langkah 1";
+            if (data.dialog == null) catatan += " — dialog BELUM ada, jalankan 2 Sistem dan UI > 2. Pasang Manager dan Data";
             laporan.Add(catatan);
         }
 

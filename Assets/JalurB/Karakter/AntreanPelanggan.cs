@@ -26,7 +26,7 @@ public class AntreanPelanggan : MonoBehaviour
     {
         if (titikMasuk == null || titikLorong == null || titikAntre == null || titikAntre.Length == 0)
         {
-            Debug.LogError("[AntreanPelanggan] Titik belum lengkap. Jalankan Last Commit > Jalur B > 4. Pasang Antrean Pelanggan.");
+            Debug.LogError("[AntreanPelanggan] Titik belum lengkap. Jalankan Last Commit > 3 Karakter dan NPC > 3. Pasang Antrean Pelanggan.");
             enabled = false;
             return;
         }

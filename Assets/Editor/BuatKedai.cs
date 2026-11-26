@@ -10,7 +10,7 @@ public static class BuatKedai
     const float PANJANG = 8f;  // sumbu Z, pintu ke jendela
     const float TINGGI = 3f;
 
-    [MenuItem("Last Commit/Bangun Blockout Kedai")]
+    [MenuItem(MenuLastCommit.RUANGAN + "1. Bangun Blockout Kedai", false, 1)]
     public static void Bangun()
     {
         // Hapus hasil bangun sebelumnya supaya bisa dijalankan berulang kali

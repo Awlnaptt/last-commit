@@ -1,6 +1,5 @@
-// PasangAntrean.cs — langkah 4: pelanggan umum yang datang, antre di counter, lalu pulang.
+// PasangAntrean.cs — menu 3 Karakter dan NPC > 3: pelanggan umum yang datang, antre di counter, lalu pulang.
 //
-// Menu: Last Commit > Jalur B > 4. Pasang Antrean Pelanggan
 //
 // Membuat Kedai > AlurPelanggan berisi:
 //   TitikMasuk  : muncul dan hilang di sini (dalam pintu)
@@ -17,7 +16,7 @@ using UnityEngine;
 
 public static class PasangAntrean
 {
-    [MenuItem("Last Commit/Jalur B/4. Pasang Antrean Pelanggan", false, 4)]
+    [MenuItem(MenuLastCommit.KARAKTER + "3. Pasang Antrean Pelanggan", false, 3)]
     public static void Pasang()
     {
         var kedai = AlatEditor.Kedai();

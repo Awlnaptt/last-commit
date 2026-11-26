@@ -1,6 +1,6 @@
 // OtomatisBuild.cs — memastikan scene Kedai selalu ada di daftar Build (paling atas, dicentang).
 // Berjalan sendiri setiap Unity selesai compile, jadi tombol "Main Lagi" di ending tidak error.
-// Sama dengan menu "Last Commit > Jalur B > 7. Masukkan Kedai ke Build", hanya otomatis.
+// Sama dengan menu "Last Commit > 2 Sistem dan UI > 5. Masukkan Kedai ke Build", hanya otomatis.
 
 using System.Collections.Generic;
 using UnityEditor;

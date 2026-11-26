@@ -17,7 +17,7 @@ public static class PerbaikiKaca
     const string FOLDER = "Assets/Art/Materials";
     const string PATH = FOLDER + "/M_KacaTransparan.mat";
 
-    [MenuItem("Last Commit/Perbaiki Kaca Jendela")]
+    [MenuItem(MenuLastCommit.RUANGAN + "4. Perbaiki Kaca Jendela", false, 4)]
     public static void Perbaiki()
     {
         var kedai = AlatEditor.Kedai();

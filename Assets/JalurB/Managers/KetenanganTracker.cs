@@ -9,7 +9,13 @@ public class KetenanganTracker : MonoBehaviour
     public static KetenanganTracker Instance { get; private set; }
 
     public int nilaiAwal = 50;
-    public int batasBawah = 20;   // aturan pengaman: tidak pernah di bawah 20
+
+    // Nilai terendah. Dulu 20 (GDD versi awal); sekarang 0 supaya burnout bisa benar-benar habis.
+    // Pengaman dari "spiral kesalahan" tetap ada: jendela Perfect tidak pernah lebih sempit dari 60%
+    // (lihat PengaliJendelaPerfect), seberapa pun rendah nilainya.
+    // Nama field sengaja baru (bukan batasBawah) supaya nilai 20 yang tersimpan di scene tidak terbawa.
+    [Range(0, 39)] public int nilaiTerendah = 0;
+    public int batasBawah => nilaiTerendah;   // nama lama, tetap bisa dibaca skrip lain
     public int batasTenang = 70;  // 70+ = Tenang
     public int batasNormal = 40;  // 40-69 = Normal, di bawahnya Gelisah
 
@@ -21,10 +27,11 @@ public class KetenanganTracker : MonoBehaviour
         TingkatKetenangan.Gelisah;
 
     // --- Untuk Jalur A (rhythm) ---
-    // Pengali lebar jendela Perfect. 1 = normal; turun linear sampai 0,6 saat Ketenangan 20.
+    // Pengali lebar jendela Perfect. 1 = normal (Ketenangan 40 ke atas); turun linear sampai 0,6
+    // saat Ketenangan mencapai nilai terendah. Tidak pernah di bawah 0,6.
     public float PengaliJendelaPerfect =>
         Tingkat == TingkatKetenangan.Gelisah
-            ? Mathf.Lerp(0.6f, 1f, Mathf.InverseLerp(batasBawah, batasNormal, Nilai))
+            ? Mathf.Lerp(0.6f, 1f, Mathf.InverseLerp(nilaiTerendah, batasNormal, Nilai))
             : 1f;
 
     // Pengali lebar jendela Good. Tenang = lebih lebar.
@@ -49,7 +56,7 @@ public class KetenanganTracker : MonoBehaviour
     public void Ubah(int delta, string alasan)
     {
         int lama = Nilai;
-        Nilai = Mathf.Clamp(Nilai + delta, batasBawah, 100);
+        Nilai = Mathf.Clamp(Nilai + delta, nilaiTerendah, 100);
         if (Nilai == lama) return;
 
         Debug.Log($"[Ketenangan] {lama} -> {Nilai} ({alasan})");

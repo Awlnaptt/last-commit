@@ -2,9 +2,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 // Memasang komponen Jalur B yang belum ada di scene secara otomatis saat Play,
-// supaya fitur tetap jalan walaupun menu "Last Commit > Jalur B > 6" belum dijalankan / belum disimpan.
+// supaya fitur tetap jalan walaupun menu editornya belum dijalankan / belum disimpan.
 //   - PapanHarga di objek PapanMenu (plus collider supaya bisa ditekan E)
 //   - MenuJedaUI di JalurB_Managers
+//   - SiklusCahaya (pagi -> malam) di JalurB_Managers
+//   - Paket atmosfer (PasangAtmosfer): cuaca harian, post-processing, uap kopi, kota luar jendela,
+//     foto wisuda, dan catatan Ibu
 // Kalau komponennya sudah ada di scene, tidak ada yang diubah.
 public static class PasangOtomatis
 {
@@ -21,6 +24,10 @@ public static class PasangOtomatis
         var managers = GameObject.Find("JalurB_Managers");
         if (managers != null && managers.GetComponent<MenuJedaUI>() == null)
             managers.AddComponent<MenuJedaUI>();
+        if (managers != null && managers.GetComponent<SiklusCahaya>() == null)
+            managers.AddComponent<SiklusCahaya>();
+
+        PasangAtmosfer.Pastikan();
 
         var kedai = GameObject.Find("Kedai");
         if (kedai == null) return;

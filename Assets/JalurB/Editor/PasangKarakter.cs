@@ -1,6 +1,5 @@
-// PasangKarakter.cs — langkah 2: satu aset ModelKarakter untuk tiap FBX karakter.
+// PasangKarakter.cs — menu 3 Karakter dan NPC > 1: satu aset ModelKarakter untuk tiap FBX karakter.
 //
-// Menu: Last Commit > Jalur B > 2. Buat Data Karakter
 // Mencari semua FBX bernama character-*.fbx di Assets/Art/Characters, lalu mengambil
 // klip idle, walk, sit, emote-yes, emote-no dari FBX itu sendiri.
 // Slot yang sudah terisi tidak ditimpa.
@@ -20,13 +19,13 @@ public static class PasangKarakter
     // Kenney Blocky Characters: skin yang TIDAK cocok jadi pelanggan kafe
     // (robot, boneka uji tabrak, polisi, zombie, hantu, bajak laut, ninja).
     // Tetap dibuat asetnya, hanya pelangganUmum = false. Kalau mau dipakai juga,
-    // hapus hurufnya dari daftar ini lalu jalankan langkah 2 lagi.
+    // hapus hurufnya dari daftar ini lalu jalankan 3 Karakter dan NPC > 1 lagi.
     static readonly HashSet<string> BUKAN_PELANGGAN = new HashSet<string>
     {
         "d", "g", "h", "j", "l", "n", "o", "p", "r"
     };
 
-    [MenuItem("Last Commit/Jalur B/2. Buat Data Karakter", false, 2)]
+    [MenuItem(MenuLastCommit.KARAKTER + "1. Buat Data Karakter", false, 1)]
     public static void Menu()
     {
         int dihapus = BersihkanYatim(true);

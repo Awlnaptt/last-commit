@@ -10,7 +10,7 @@ public static class BuatHujan
     static readonly Vector3 POSISI = new Vector3(-1.4f, 6.5f, 5.6f);
     static readonly Vector3 KOTAK  = new Vector3(11f, 0.2f, 4.5f);
 
-    [MenuItem("Last Commit/Buat Hujan di Luar Jendela")]
+    [MenuItem(MenuLastCommit.SUASANA + "1. Buat Hujan di Luar Jendela", false, 1)]
     public static void Buat()
     {
         var akar = GameObject.Find("Kedai");

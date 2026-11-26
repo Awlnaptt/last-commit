@@ -1,4 +1,5 @@
-// Pembantu bersama untuk menu Last Commit > Jalur B.
+// Pembantu bersama untuk menu editor Last Commit (lihat MenuLastCommit.cs).
+// Cari dan Ukur meneruskan ke AlatKedai supaya hasilnya sama dengan saat Play.
 
 using UnityEditor;
 using UnityEngine;
@@ -34,12 +35,7 @@ public static class AlatEditor
         return c != null ? c : Undo.AddComponent<T>(go);
     }
 
-    public static Transform Cari(Transform akar, string nama)
-    {
-        foreach (var t in akar.GetComponentsInChildren<Transform>(true))
-            if (t.name == nama) return t;
-        return null;
-    }
+    public static Transform Cari(Transform akar, string nama) => AlatKedai.Cari(akar, nama);
 
     public static Transform Grup(Transform akar, string nama)
     {
@@ -73,16 +69,7 @@ public static class AlatEditor
         return go.transform;
     }
 
-    public static bool Ukur(Transform t, out Bounds b)
-    {
-        b = default;
-        if (t == null) return false;
-        var rs = t.GetComponentsInChildren<Renderer>(true);
-        if (rs.Length == 0) return false;
-        b = rs[0].bounds;
-        foreach (var r in rs) b.Encapsulate(r.bounds);
-        return true;
-    }
+    public static bool Ukur(Transform t, out Bounds b) => AlatKedai.Ukur(t, out b);
 
     // Titik berdiri di samping perabot, dihitung dari bentuk yang TERLIHAT
     // (pivot model Kenney bisa meleset sekitar 1 m dari bendanya).
@@ -119,5 +106,26 @@ public static class AlatEditor
             EditorUtility.DisplayDialog("Scene belum siap",
                 "Buka scene Kedai yang sudah punya objek 'Kedai'.", "OK");
         return k;
+    }
+
+    // Instansiasi model dari folder Art, skalakan ke tinggi (meter), letakkan alasnya di posisi.y,
+    // tengahnya di posisi.x / posisi.z (dihitung dari bentuk yang terlihat, bukan pivot).
+    // Dikerjakan di luar induk dulu karena bounds objek nonaktif tidak bisa diukur.
+    public static GameObject Taruh(Transform induk, string kit, string nama, Vector3 posisi, float rotY, float tinggi)
+    {
+        var sumber = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Art/" + kit + "/" + nama + ".fbx");
+        if (sumber == null) { Debug.LogWarning("[Jalur B] Model " + kit + "/" + nama + " tidak ditemukan."); return null; }
+
+        var go = (GameObject)PrefabUtility.InstantiatePrefab(sumber);
+        Undo.RegisterCreatedObjectUndo(go, "Taruh " + nama);
+        go.transform.SetPositionAndRotation(Vector3.zero, Quaternion.Euler(0f, rotY, 0f));
+
+        if (Ukur(go.transform, out var b) && b.size.y > 0.0001f)
+            go.transform.localScale *= tinggi / b.size.y;
+        if (Ukur(go.transform, out b))
+            go.transform.position += new Vector3(posisi.x - b.center.x, posisi.y - b.min.y, posisi.z - b.center.z);
+
+        go.transform.SetParent(induk, true);
+        return go;
     }
 }
